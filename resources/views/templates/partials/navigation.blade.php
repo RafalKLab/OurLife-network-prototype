@@ -11,8 +11,8 @@
                 <li class="nav-item ">
                     <a class="nav-link" href="#">Dashboard</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Friends</a>
+                <li class="nav-item {{ Request::is('friends') ? 'active' : '' }}">
+                    <a class="nav-link " href="{{route('friend.index')}}">Friends</a>
                 </li>
                 <form method="GET" action="{{route('search.results')}}" class="form-inline my-2 my-lg-0 ml-2">
                     <input name="query" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -22,11 +22,11 @@
             @endif
             <ul class="navbar-nav ml-auto">
                 @if (Auth::check())
-                    <li class="nav-item">
+                    <li class="nav-item {{ Request::is('user/' . Auth::user()->username) ? 'active' : '' }}">
                         <a href="{{route('profile.index', ['username' => Auth::user()->username])}}"
                            class="nav-link">{{Auth::user()->getNameOrUsername()}}</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item {{ Request::is('profile/edit') ? 'active' : '' }}">
                         <a href="{{route('profile.edit')}}" class="nav-link">Edit profile</a>
                     </li>
                     <li class="nav-item">
@@ -34,8 +34,12 @@
                     </li>
 
                 @else
-                    <li class="nav-item"><a href="{{route('auth.signup')}}" class="nav-link active">Sign up</a></li>
-                    <li class="nav-item"><a href="{{route('auth.signin')}}" class="nav-link active">Sign in</a></li>
+                    <li class="nav-item {{ Request::is('signup') ? 'active' : '' }}">
+                        <a href="{{route('auth.signup')}}" class="nav-link">Sign up</a>
+                    </li>
+                    <li class="nav-item {{ Request::is('signin') ? 'active' : '' }}">
+                        <a href="{{route('auth.signin')}}" class="nav-link">Sign in</a>
+                    </li>
                 @endif
             </ul>
         </div>

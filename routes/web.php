@@ -42,3 +42,10 @@ Route::get('/user/{username}', [App\Http\Controllers\ProfileController::class, '
 Route::get('/profile/edit', [App\Http\Controllers\ProfileController::class, 'getEdit'])->middleware('auth')->name('profile.edit');
 Route::post('/profile/edit', [App\Http\Controllers\ProfileController::class, 'postEdit'])->middleware('auth')->name('profile.edit');
 
+/**
+ * Friends
+ */
+Route::get('/friends', [App\Http\Controllers\FriendController::class, 'getIndex'])->middleware('auth')->name('friend.index');
+Route::get('/friends/add/{username}', [App\Http\Controllers\FriendController::class, 'getAdd'])->middleware('auth')->name('friend.add');
+Route::get('/friends/accept/{username}', [App\Http\Controllers\FriendController::class, 'getAccept'])->middleware('auth')->name('friend.accept');
+Route::post('/friends/delete/{username}', [App\Http\Controllers\FriendController::class, 'postDelete'])->middleware('auth')->name('friend.delete');

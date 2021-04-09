@@ -21,8 +21,21 @@
                                         {{$user->location}}
                                     @endif
                                 </p>
-                                <button class="btn btn-primary">Follow</button>
-                                <button class="btn btn-outline-primary">Message</button>
+                                        @if( Auth::user()->hasFriendRequestPending($user) )
+                                            <p>{{$user->getFirstNameOrUsername()}} got your requests.</p>
+                                        @elseif( Auth::user()->hasFriendRequestReceived($user) )
+                                            <a href="{{route('friend.accept' , ['username' => $user->username])}}" class="btn btn-primary">Accept friend request</a>
+                                        @elseif( Auth::user()->isFriendWith($user) )
+                                            {{$user->getFirstNameOrUsername()}} is your friend <br>
+                                        <form action="{{route('friend.delete', ['username'=>$user->username])}}" method="POST">
+                                            @csrf
+                                            <input type="submit" class="btn btn-danger my-2" value="Unfriend">
+                                        </form>
+                                        @else
+                                            @if($user!=Auth::user())
+                                                <a href="{{ route('friend.add', ['username' => $user->username]) }}" class="btn btn-primary">Add friend</a>
+                                            @endif
+                                        @endif
                             </div>
                         </div>
                     </div>
@@ -110,6 +123,33 @@
                                 @endif
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="card md-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0"><h5>{{$user->getFirstNameOrUsername()}} friends</h5></h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{$user->friends()->count()}}
+                            </div>
+                        </div>
+                        @if(!$user->friends()->count())
+                            There is no friends yet!
+                        @else
+                            @foreach($user->friends() as $user)
+                                <hr>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        @include('user.partials.userblock')
+                                    </div>
+                                    <div class="col-sm-6 text-secondary">
+                                        Example text
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
