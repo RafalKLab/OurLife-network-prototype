@@ -49,3 +49,18 @@ Route::get('/friends', [App\Http\Controllers\FriendController::class, 'getIndex'
 Route::get('/friends/add/{username}', [App\Http\Controllers\FriendController::class, 'getAdd'])->middleware('auth')->name('friend.add');
 Route::get('/friends/accept/{username}', [App\Http\Controllers\FriendController::class, 'getAccept'])->middleware('auth')->name('friend.accept');
 Route::post('/friends/delete/{username}', [App\Http\Controllers\FriendController::class, 'postDelete'])->middleware('auth')->name('friend.delete');
+
+
+/**
+ * Timeline
+ */
+Route::post('/status', [App\Http\Controllers\StatusController::class, 'postStatus'])->middleware('auth')->name('status.post');
+Route::post('/status/{statusId}/reply', [App\Http\Controllers\StatusController::class, 'postReply'])->middleware('auth')->name('status.reply');
+Route::post('/status/delete/{id}', [App\Http\Controllers\StatusController::class, 'destroy'])->middleware('auth')->name('status.destroy');
+
+/**
+ * Events
+ */
+Route::get('/events', [App\Http\Controllers\EventController::class, 'index'])->middleware('auth')->name('events.get');
+Route::get('/events/create', [App\Http\Controllers\EventController::class, 'create'])->middleware('auth')->name('events.create');
+Route::post('/events/create', [App\Http\Controllers\EventController::class, 'store'])->middleware('auth');

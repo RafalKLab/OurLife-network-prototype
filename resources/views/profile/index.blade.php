@@ -155,6 +155,29 @@
             </div>
         </div>
     </div>
+
+        @if($user_copy->events()->count())
+                <div class="col-sm-12">
+                    <h3>{{$user_copy->getFirstNameOrUsername()}} events {{ $user_copy->events()->count()  }}</h3>
+                    <hr>
+                </div>
+            <div class="row" align="center">
+                @foreach($user_copy->events()->orderBy('event_date', 'desc')->get() as $event)
+                    <div class="col-lg-4 my-2">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="...There will be an image someday...">
+                            <div class="card-body">
+                                <h5 class="card-title">{{$event->title}}</h5>
+                                <h6 class="card-title">{{$event->event_date}}</h6>
+                                <p class="card-text">{{$event->body}}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+
+    </div>
 @endsection
 
 
