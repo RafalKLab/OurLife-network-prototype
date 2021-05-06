@@ -10,10 +10,11 @@ class ProfileController extends Controller
 {
     public function getProfile($username){
         $user = User::where('username', $username)->first();
+        $user_copy = $user;
         if(!$user){
             abort(404);
         }
-        return view('profile.index', compact('user'));
+        return view('profile.index', compact('user', 'user_copy'));
     }
 
     public function getEdit(){
@@ -22,9 +23,9 @@ class ProfileController extends Controller
 
     public function postEdit(Request $request){
         $this->validate($request, [
-            'first_name' => 'alpha|max:50',
-            'last_name' => 'alpha|max:50',
-            'location' => 'max:20',
+            'first_name' => 'alpha|min:2|max:50',
+            'last_name' => 'alpha|min:2|max:50',
+            'location' => 'min:2|max:20',
         ]);
 
         Auth::user()->update([

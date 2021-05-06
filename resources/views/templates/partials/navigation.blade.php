@@ -26,6 +26,9 @@
                         <a href="{{route('profile.index', ['username' => Auth::user()->username])}}"
                            class="nav-link">{{Auth::user()->getNameOrUsername()}}</a>
                     </li>
+                    <li class="nav-item {{ Request::is('events') ? 'active' : '' }}">
+                        <a href="{{route('events.get')}}" class="nav-link">Events</a>
+                    </li>
                     <li class="nav-item {{ Request::is('profile/edit') ? 'active' : '' }}">
                         <a href="{{route('profile.edit')}}" class="nav-link">Edit profile</a>
                     </li>

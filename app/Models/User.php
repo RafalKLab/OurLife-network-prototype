@@ -54,6 +54,17 @@ class User extends Authenticatable
         return null;
     }
 
+    // events
+    public function events(){
+        return $this->hasMany('App\Models\Event', 'user_id');
+    }
+
+    //user releated posts in the timeline
+    public function statuses(){
+        return $this->hasMany('App\Models\Status', 'user_id');
+    }
+
+
     public function getNameOrUsername(){
         return $this->getName() ?: $this->username;
     }
